@@ -59,35 +59,6 @@ class _TaskHomeState extends State<TaskHome> {
     }
   }
 
-  // Future<void> _shareToSnapchat() async {
-  //   if (_mediaPath == null) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("No watermarked image to share."),
-  //       ),
-  //     );
-  //     return;
-  //   }
-
-  //   try {
-  //     final File imageFile = File(_mediaPath!);
-  //     final ImageProvider imageProvider = FileImage(imageFile);
-
-  //     await snapkit.share(
-  //       SnapchatMediaType.PHOTO,
-  //       image: imageProvider, // Use ImageProvider here
-  //       caption: _controller.text, // Add optional caption
-  //     );
-  //   } catch (e) {
-  //     print("Error sharing to Snapchat: $e");
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text("Failed to share to Snapchat: $e"),
-  //       ),
-  //     );
-  //   }
-  // }
-
   Future<void> _share(
     SocialPlatform platform, {
     bool isMultipleShare = false,
@@ -105,7 +76,7 @@ class _TaskHomeState extends State<TaskHome> {
     isMultipleShare
         ? await SocialSharingPlus.shareToSocialMediaWithMultipleMedia(
             platform,
-            media: [_mediaPath!], // مشاركة الصورة المائية
+            media: [_mediaPath!],
             content: content,
             isOpenBrowser: true,
             onAppNotInstalled: () {
@@ -138,7 +109,8 @@ class _TaskHomeState extends State<TaskHome> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text("Watermark Example"),
+        centerTitle: true,
+        title: const Text("Dream Soft Task"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -205,10 +177,8 @@ Future<File> addWatermarkToImage(
     Uint8List imageBytes, String watermarkText, Uint8List? logoBytes) async {
   img.Image originalImage = img.decodeImage(imageBytes)!;
 
-  // Define the size for the white container
   int containerHeight = (originalImage.height * 0.1).toInt();
 
-  // Create a white rectangle at the bottom
   img.fillRect(
       originalImage,
       0,
